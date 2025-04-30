@@ -1,0 +1,10 @@
+<?php
+$data = json_decode(file_get_contents('data/farming_tips.json'), true);
+?>
+<h2>Farming Tips</h2>
+<ul>
+<?php foreach ($data as $crop => $tip): ?>
+  <li><strong><?= ucfirst($crop) ?>:</strong> <?= $tip ?></li>
+<?php endforeach; ?>
+</ul>
+<a href="index.php">Back</a>
