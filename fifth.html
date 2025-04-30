@@ -1,0 +1,38 @@
+<?php
+$farming = json_decode(file_get_contents('data/farming_tips.json'), true);
+$health = json_decode(file_get_contents('data/health_tips.json'), true);
+
+$answer = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $query = strtolower($_POST["query"]);
+
+    foreach ($farming as $crop => $tip) {
+        if (strpos($query, $crop) !== false) {
+            $answer = "Farming Tip: $tip";
+            break;
+        }
+    }
+
+    if ($answer == "") {
+        foreach ($health as $issue => $tip) {
+            if (strpos($query, $issue) !== false) {
+                $answer = "Health Tip: $tip";
+                break;
+            }
+        }
+    }
+
+    if ($answer == "") {
+        $answer = "Sorry, I don't have information on that. Please ask about crops or common health issues.";
+    }
+}
+?>
+
+<h2>Ask the Assistant</h2>
+<form method="post">
+  <input type="text" name="query" placeholder="e.g. how to grow wheat" required>
+  <button type="submit">Ask</button>
+</form>
+
+<p><strong>Answer:</strong> <?= $answer ?></p>
+<a href="index.php">Back</a>
