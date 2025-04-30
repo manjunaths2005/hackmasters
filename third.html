@@ -1,0 +1,10 @@
+<?php
+$data = json_decode(file_get_contents('data/health_tips.json'), true);
+?>
+<h2>Health Care Tips</h2>
+<ul>
+<?php foreach ($data as $issue => $tip): ?>
+  <li><strong><?= ucfirst($issue) ?>:</strong> <?= $tip ?></li>
+<?php endforeach; ?>
+</ul>
+<a href="index.php">Back</a>
